@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://db1nfma7onpp3"]
+
+[ext_resource type="Script" uid="uid://beduq81wggrrg" path="res://checkpoint_0.gd" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://46o4bhtfnl7p" path="res://car.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bx7yd4exy0d67" path="res://race_manager.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://codg1es0cnris" path="res://checkpoint_1.gd" id="2_lquwl"]
+[ext_resource type="Script" uid="uid://c6nbe1mk3r5od" path="res://checkpoint_2.gd" id="3_7mycd"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hqkgv"]
+
+[sub_resource type="Sky" id="Sky_6qx4q"]
+sky_material = SubResource("ProceduralSkyMaterial_hqkgv")
+
+[sub_resource type="Environment" id="Environment_g7b7a"]
+background_mode = 2
+sky = SubResource("Sky_6qx4q")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gyc6d"]
+size = Vector3(60, 10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6qx4q"]
+size = Vector3(10, 10, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hqkgv"]
+size = Vector3(60, 10, 10)
+
+[sub_resource type="Curve3D" id="Curve3D_lquwl"]
+closed = true
+_data = {
+"points": PackedVector3Array(52.621735, -0.037109375, 47.057083, -52.621735, 0.037109375, -47.057083, -346.76572, -0.12243652, 150.02118, -76.86603, -0.0982666, 121.11398, 76.86603, 0.0982666, -121.11398, -346.80246, 0.37322998, -472.39645, -87.75778, 0.088012695, -111.27399, 87.75778, -0.088012695, 111.27399, 428.25467, 0.38568115, -479.68137, 47.548798, 0.079956055, -99.94493, -47.548798, -0.079956055, 99.94493, 427.11343, -0.12860107, 166.11629, 111.12966, 0.008972168, -10.1474, -111.12966, -0.008972168, 10.1474, 33.869408, -0.32348633, 406.77612),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Node3D" unique_id=1558180127]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1438755285]
+transform = Transform3D(1, 0, 0, 0, 0.6959935, 0.7180481, 0, -0.7180481, 0.6959935, 0, 26.993473, 31.37966)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="DirectionalLight3D" unique_id=97248690]
+environment = SubResource("Environment_g7b7a")
+
+[node name="RaceManager" type="Node" parent="." unique_id=959792795]
+script = ExtResource("1_lquwl")
+
+[node name="Checkpoints" type="Node3D" parent="." unique_id=1396104211]
+
+[node name="Checkpoint0" type="Area3D" parent="Checkpoints" unique_id=1135306659]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -360.30045, 4.2780876, -71.21631)
+script = ExtResource("1_1bvp3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/Checkpoint0" unique_id=1911522618]
+shape = SubResource("BoxShape3D_gyc6d")
+
+[node name="Checkpoint1" type="Area3D" parent="Checkpoints" unique_id=730321658]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8433475, -530.5845)
+script = ExtResource("2_lquwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/Checkpoint1" unique_id=1846439469]
+shape = SubResource("BoxShape3D_6qx4q")
+
+[node name="Checkpoint2" type="Area3D" parent="Checkpoints" unique_id=1464880722]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 393.40796, 3.9008503, 177.46313)
+script = ExtResource("3_7mycd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Checkpoints/Checkpoint2" unique_id=239190909]
+shape = SubResource("BoxShape3D_hqkgv")
+
+[node name="Car" parent="." unique_id=1985034601 groups=["racer"] instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -359.1497, 5.316036, -54.03588)
+
+[node name="Path3D" type="Path3D" parent="." unique_id=100065358]
+curve = SubResource("Curve3D_lquwl")
+
+[node name="CSGPolygon3D" type="CSGPolygon3D" parent="Path3D" unique_id=1704561046]
+use_collision = true
+polygon = PackedVector2Array(0, 0, 0, 1, 50, 1, 1, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
